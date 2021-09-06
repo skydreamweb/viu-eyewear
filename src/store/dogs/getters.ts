@@ -8,5 +8,8 @@ export const getters: GetterTree<DogsState, RootState> = {
   },
   GET_CATEGORY_IMAGES(state) {
     return state.categoryImages;
+  },
+  GET_SPINNER_LOADING(state) {
+    return state.spinnerLoading;
   }
 };

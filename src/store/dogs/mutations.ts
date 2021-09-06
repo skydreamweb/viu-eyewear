@@ -7,5 +7,8 @@ export const mutations: MutationTree<DogsState> = {
   },
   SET_CATEGORY_IMAGES(state, payload: any) {
     state.categoryImages = payload;
+  },
+  SET_SPINNER_LOADING(state, payload: any) {
+    state.spinnerLoading = payload;
   }
 };

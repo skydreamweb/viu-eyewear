@@ -8,7 +8,8 @@ import { getters } from "./getters";
 const state: DogsState = {
   breedsName: "Dalibor",
   allBreeds: [],
-  categoryImages: []
+  categoryImages: [],
+  spinnerLoading: false
 };
 
 export const dogs: Module<DogsState, RootState> = {

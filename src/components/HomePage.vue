@@ -1,31 +1,42 @@
 <template>
   <div class="breeds-list">
-    <div class="images">
+    <div v-if="loadingSpinner" class="images">
       <div class="wrapper" v-for="(breed, index) in breeds" :key="index">
         <div class="img-wrapper">
           <router-link :to="'/' + breed.name"
             ><img :src="breed.image" :alt="breed.name" class="img"
           /></router-link>
         </div>
-        <div class="btn-wrapper"></div>
       </div>
+    </div>
+    <div v-else class="spinner">
+      <base-spinner></base-spinner>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
+import BaseSpinner from "@/components/UI/BaseSpinner.vue";
 
-@Component
-export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
-  mounted(): void {
+@Component({
+  components: {
+    BaseSpinner,
+  },
+})
+export default class HomePage extends Vue {
+  created(): void {
     if (this.$store.getters.GET_DOGS_BREEDS.length === 0) {
       this.$store.dispatch("fetchBreeds");
     }
   }
   get breeds(): unknown {
     return this.$store.getters.GET_DOGS_BREEDS;
+  }
+  get loadingSpinner(): boolean {
+    console.log(this.$store.getters.GET_SPINNER_LOADING);
+
+    return this.$store.getters.GET_SPINNER_LOADING;
   }
 }
 </script>
@@ -36,7 +47,7 @@ h1 {
   text-align: center;
 }
 .breeds-list {
-  margin: 50px auto auto 100px;
+  margin: 50px auto;
 }
 .images {
   text-align: center;
@@ -62,22 +73,7 @@ img {
   border-radius: 5px;
   transition: opacity 0.3s ease-in-out;
 }
-.btn-wrapper {
-  height: 0;
-  position: relative;
-  bottom: 50px;
+.spinner {
+  height: 65vh;
 }
-.addBtn {
-  opacity: 0;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #2c3e50;
-  color: #ffffff;
-  cursor: pointer;
-  transition: opacity 0.3s ease-in-out;
-}
-/*button.addBtn.disabled {*/
-/*background-color: darkgreen;*/
-/*}*/
 </style>

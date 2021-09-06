@@ -8,10 +8,9 @@ export const actions: ActionTree<DogsState, RootState> = {
     return axios
       .get("https://dog.ceo/api/breeds/list/all")
       .then((response: any) => {
-        console.log(response.data);
-
         for (const key of Object.keys(response.data.message)) {
           dispatch("fetchImages", key);
+          console.log("loop");
         }
       })
       .catch(function(error: any) {
@@ -28,6 +27,7 @@ export const actions: ActionTree<DogsState, RootState> = {
           image: response.data.message
         };
         commit("SET_DOGS_BREEDS", singleBreeds);
+        commit("SET_SPINNER_LOADING", true);
       })
       .catch(function(error: any) {
         // handle error
