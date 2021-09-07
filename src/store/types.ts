@@ -1,3 +1,1 @@
-export interface RootState {
-    helloMessage: string;
-}
+export interface RootState {}

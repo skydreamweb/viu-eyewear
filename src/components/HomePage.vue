@@ -30,18 +30,15 @@ export default class HomePage extends Vue {
       this.$store.dispatch("fetchBreeds");
     }
   }
-  get breeds(): unknown {
+  get breeds(): { image: string; name: string }[] {
     return this.$store.getters.GET_DOGS_BREEDS;
   }
   get loadingSpinner(): boolean {
-    console.log(this.$store.getters.GET_SPINNER_LOADING);
-
     return this.$store.getters.GET_SPINNER_LOADING;
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 h1 {
   text-align: center;
@@ -57,13 +54,18 @@ h1 {
   display: inline-block;
   text-align: center;
   margin: 10px;
+
+  &:hover {
+    img {
+      opacity: 0.5;
+    }
+
+    button {
+      opacity: 1;
+    }
+  }
 }
-.wrapper:hover img {
-  opacity: 0.5;
-}
-.wrapper:hover button {
-  opacity: 1;
-}
+
 .img-wrapper {
   display: inline-block;
   height: 250px;

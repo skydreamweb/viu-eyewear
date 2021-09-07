@@ -6,7 +6,7 @@ import { mutations } from "./mutations";
 import { getters } from "./getters";
 
 const state: DogsState = {
-  breedsName: "Dalibor",
+  breedsName: "",
   allBreeds: [],
   categoryImages: [],
   spinnerLoading: false

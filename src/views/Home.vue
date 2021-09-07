@@ -15,3 +15,9 @@ import HomePage from "@/components/HomePage.vue"; // @ is an alias to /src
 })
 export default class Home extends Vue {}
 </script>
+<style lang="scss">
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+</style>

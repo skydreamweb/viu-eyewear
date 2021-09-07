@@ -1,6 +1,13 @@
+type BreedsType = {
+  name: string;
+  image: string;
+};
+type CategoryType = {
+  image: string;
+};
 export interface DogsState {
   breedsName: string;
-  allBreeds: Array<String>;
-  categoryImages: Array<String>;
+  allBreeds: BreedsType[];
+  categoryImages: CategoryType[];
   spinnerLoading: boolean;
 }

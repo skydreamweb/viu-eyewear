@@ -1,35 +1,36 @@
 <template>
-  <div class="breeds-list">
-    <div class="images" v-if="categoryImages.length > 0">
-      <div
-        class="wrapper"
-        v-for="(image, index) in categoryImages"
-        :key="index"
-      >
-        <div class="img-wrapper" @click="zoom(image)">
-          <img
-            :src="image"
-            :alt="image"
-            class="img"
-            @mouseover="getImageName(image)"
-          />
-          <div class="overlay">
-            <div class="text">{{ imageName }}</div>
+  <div>
+    <div class="breeds-list">
+      <div class="images" v-if="categoryImages.length > 0">
+        <div
+          class="wrapper"
+          v-for="(image, index) in categoryImages"
+          :key="index"
+        >
+          <div class="img-wrapper" @click="zoom(image)">
+            <img
+              :src="image"
+              :alt="image"
+              class="img"
+              @mouseover="getImageName(image)"
+            />
+            <div class="overlay">
+              <div class="text">{{ imageName }}</div>
+            </div>
           </div>
         </div>
       </div>
+      <div v-else class="spinner">
+        <base-spinner></base-spinner>
+      </div>
     </div>
-    <div v-if="selectedImage" max-width="85vw" class="modal">
-      <img
-        :src="selectedImage"
-        alt=""
-        width="100%"
-        @click.stop="selectedImage = ''"
-      />
-      <hr />
-    </div>
-    <div v-else class="spinner">
-      <base-spinner></base-spinner>
+    <div
+      v-if="selectedImage.length > 0"
+      max-width="85vw"
+      class="modal"
+      @click.stop="selectedImage = ''"
+    >
+      <img :src="selectedImage" alt="" width="100%" />
     </div>
   </div>
 </template>
@@ -47,11 +48,10 @@ export default class Breed extends Vue {
   mounted(): void {
     this.$store.dispatch("fetchCategoryImages", this.$route.params.name);
   }
-
   imageName = "";
   selectedImage = "";
 
-  get categoryImages(): unknown {
+  get categoryImages(): { image: string }[] {
     return this.$store.getters.GET_CATEGORY_IMAGES;
   }
 
@@ -69,6 +69,7 @@ h1 {
   text-align: center;
 }
 .breeds-list {
+  max-width: 1200px;
   margin: 50px auto;
 }
 .images {
@@ -79,20 +80,21 @@ h1 {
   display: inline-block;
   text-align: center;
   margin: 10px;
+  &:hover {
+    img {
+      opacity: 0.2;
+    }
+    .overlay {
+      opacity: 0.9;
+    }
+    button {
+      opacity: 1;
+    }
+  }
 }
 .overlay {
   opacity: 0;
-}
-.wrapper:hover {
-  img {
-    opacity: 0.2;
-  }
-  .overlay {
-    opacity: 0.9;
-  }
-}
-.wrapper:hover button {
-  opacity: 1;
+  position: absolute;
 }
 .img-wrapper {
   display: flex;
@@ -105,8 +107,13 @@ img {
   border-radius: 5px;
   transition: opacity 0.3s ease-in-out;
 }
-.overlay {
-  position: absolute;
+.modal img {
+  width: unset;
+  margin: auto;
+  height: auto;
+  border-radius: 5px;
+  transition: opacity 0.3s ease-in-out;
+  margin-top: 20vh;
 }
 .text {
   font-size: 16px;
@@ -116,10 +123,9 @@ img {
 .modal {
   top: 0;
   height: 100%;
+  width: 100%;
   z-index: 999;
   position: fixed;
+  background: rgb(25 25 25 / 65%);
 }
-/*button.addBtn.disabled {*/
-/*background-color: darkgreen;*/
-/*}*/
 </style>
